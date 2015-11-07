@@ -41,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
         this.buttonHelp = (Button) findViewById(R.id.button);
         this.buttonRefresh = (Button) findViewById(R.id.button2);
         this.statusToggle = (Switch) findViewById(R.id.switch1);
+
+
+        // User newuser = User(getname(), getmessage(), help, range)
+        // Client newClient = new Client(User)
+        // newClient.getserver()
     }
 
     public String getName() {
