@@ -13,12 +13,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Welcome, kind person"
+        android:text="Welcome, "
         android:id="@+id/textView"
         android:elegantTextHeight="false"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:layout_alignBaseline="@+id/editText2"
+        android:layout_alignBottom="@+id/editText2"
+        android:layout_toStartOf="@+id/editText2" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -110,5 +111,24 @@
         android:indeterminate="false"
         android:max="100"
         android:progress="5" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="John Smith"
+        android:ems="10"
+        android:id="@+id/editText2"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/textView2" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="refresh"
+        android:id="@+id/button2"
+        android:layout_below="@+id/textView"
+        android:layout_alignEnd="@+id/editText" />
 
 </RelativeLayout>
