@@ -6,13 +6,19 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText name;
+    private EditText helpReason;
+    private Button buttonHelp;
+    private Button buttonRefresh;
+    private Switch statusToggle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +36,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        this.name = (EditText) findViewById(R.id.editText);
+        this.helpReason = (EditText) findViewById(R.id.editText);
+        this.name = (EditText) findViewById(R.id.editText2);
+        this.buttonHelp = (Button) findViewById(R.id.button);
+        this.buttonRefresh = (Button) findViewById(R.id.button2);
+        this.statusToggle = (Switch) findViewById(R.id.switch1);
     }
 
-    public String getName(String defaultNam) {
-        return this.name != null ? name.getText().toString() : defaultNam;
+    public String getName() {
+        return this.name != null ? name.getText().toString() : "John";
     }
+
+    public String getMessage() {
+        return this.helpReason != null ? helpReason.getText().toString() : "need help";
+    }
+
+    public void onClick(View v) {
+        if (v == buttonHelp) {
+            // call server update with change
+        } else if (v == buttonRefresh) {
+            // call sever update with change
+        } else if (v == statusToggle) {
+            // call server update with change
+        }
+    }
+
 
     //@Override
     /*
@@ -49,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
+        // automatically handle clicks on the Home/Up buttonHelp, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
