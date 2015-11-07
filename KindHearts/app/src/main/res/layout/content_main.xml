@@ -41,7 +41,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="   I need help!   "
+        android:text="   Help Me   "
         android:id="@+id/button"
         android:background="#9b59b6"
         android:textColor="#ecf0f1"
@@ -51,10 +51,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="I need help:"
+        android:text="I need help to:"
         android:id="@+id/textView3"
         android:layout_centerVertical="true"
-        android:layout_alignEnd="@+id/switch1" />
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -96,16 +96,19 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Distance I&apos;m willing to go"
         android:id="@+id/textView6"
-        android:layout_below="@+id/switch1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp" />
+        android:layout_above="@+id/seekBar"
+        android:layout_centerHorizontal="true" />
 
     <SeekBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/seekBar"
-        android:layout_below="@+id/textView6"
+        android:layout_marginBottom="61dp"
+        android:layout_above="@+id/textView3"
         android:layout_alignStart="@+id/textView6"
-        android:layout_alignEnd="@+id/textView6" />
+        android:layout_alignEnd="@+id/textView6"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="5" />
 
 </RelativeLayout>
