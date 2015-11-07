@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SafeWalk</string>
+    <string name="server">Server</string>
+    <string name="client">Client</string>
+    <string name="submit">Submit</string>
+    <string name="match">Match</string>
+    <string name="start_over">Start Over</string>
+    <string name="default_host">10.0.2.2</string>
+    <string name="default_port">8888</string>
+    <string name="default_command">:FAKE_COMMAND</string>
+    <string name="host">Host</string>
+    <string name="port">Port</string>
+    <string-array name="planets_array">
+        <item>CL50: Class of 1950 Lecture Hall</item>
+        <item>EE: Electrical Engineering Building</item>
+        <item>LWSN: Lawson Computer Science Building</item>
+        <item>PMU: Purdue Memorial Union</item>
+        <item>PUSH: Purdue University Student Health Center</item>
+        <item>*: Any one of the location above</item>
+    </string-array>
+    <string-array name="planets_array2">
+        <item>CL50: Class of 1950 Lecture Hall</item>
+        <item>EE: Electrical Engineering Building</item>
+        <item>LWSN: Lawson Computer Science Building</item>
+        <item>PMU: Purdue Memorial Union</item>
+        <item>PUSH: Purdue University Student Health Center</item>
+    </string-array>
+</resources>
