@@ -9,8 +9,8 @@ public class Server implements Runnable {
     ArrayList<User> users;
     
     public Server(int port) throws SocketException, IOException {
-        //FIX ME
-        if (0 <= port && port <= 65535) {
+        //FIX ME **0 -> 1024 are reserved
+        if (1025 <= port && port <= 65535) {
             serverSocket = new ServerSocket(port);
             return;
         }
@@ -32,10 +32,17 @@ public class Server implements Runnable {
             System.out.println("We should be on port: " + this.getLocalPort());
             while(true) {
                 Socket client = serverSocket.accept();
-                PrintWriter rea = new PrintWriter(client.getOutputStream());
-                BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                PrintWriter clientWrite = new PrintWriter(client.getOutputStream());
+                BufferedReader clientRead = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                //Need To Add To ArrayLists, pair and end users here
                 
-            break;
+                
+                
+                clientWrite.flush();
+                clientWrite.close();
+                clientRead.close();
+                client.close();
+                break;
             }
         } catch (IOException e) {
             System.out.println("Something is wrong.\n");
