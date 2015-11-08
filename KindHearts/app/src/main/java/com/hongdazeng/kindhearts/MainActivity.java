@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 item.Name = name.getText().toString();
                 item.Request = helpReason.getText().toString();
                 HelpRequestTable.insert(item);
+                createAndShowDialog(new Exception("   "), "Request Submitted");
             }
         });
 
@@ -155,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             createAndShowDialog(e, "Error");
         }
 
-        createAndShowDialog(new Exception("Welcome to KindHearts!"), "KindHearts");
+        createAndShowDialog(new Exception("Welcome to KindHeart!"), "KindHeart");
 
         // User newuser = User(getname(), getmessage(), help, range)
         // Client newClient = new Client(User)
