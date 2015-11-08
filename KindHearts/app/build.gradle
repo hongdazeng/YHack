@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.1'
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.hongdazeng.kindhearts"
-        minSdkVersion 21
+        minSdkVersion 9
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -25,4 +25,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:design:23.0.1'
     compile 'com.microsoft.azure:azure-mobile-services-android-sdk:2.0.3'
+    compile 'com.google.android.gms:play-services-base:6.5.87'
+    compile(group: 'com.microsoft.azure', name: 'azure-notifications-handler', version: '1.0.1', ext: 'jar')
 }

@@ -5,10 +5,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Switch;
 import com.microsoft.windowsazure.mobileservices.*;
 
@@ -19,22 +22,31 @@ import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.os.AsyncTask;
+import android.widget.TextView;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
 
+import com.microsoft.windowsazure.notifications.NotificationsManager;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText name;
     private EditText helpReason;
-    private Button buttonHelp;
-    private Button buttonRefresh;
+    private ImageButton buttonHelp;
+    private ImageButton buttonRefresh;
     private Switch statusToggle;
-    private MobileServiceClient mClient;
+    private ListView list;
+    public static MobileServiceClient mClient;
     private MobileServiceTable<User> UserTable;
     private MobileServiceTable<Help> HelpRequestTable;
+//    private ToDoItemAdapter mAdapter;
+
+    public static final String SENDER_ID = "1085437748397";
+
+    private String myName;
 
     Help someHelp;
 
@@ -55,31 +67,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.homescreen);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Created by H A B & M at Yhack 2015 ", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        Log.d("MyApp", "hi there");
 
-        this.helpReason = (EditText) findViewById(R.id.editText);
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Created by H A B & M at Yhack 2015 ", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+
+        this.helpReason = (EditText) findViewById(R.id.editText3);
         this.name = (EditText) findViewById(R.id.editText2);
-        this.buttonHelp = (Button) findViewById(R.id.button);
-        this.buttonRefresh = (Button) findViewById(R.id.button2);
-        this.statusToggle = (Switch) findViewById(R.id.switch1);
+        this.buttonHelp = (ImageButton) findViewById(R.id.imageButton);
+        this.buttonRefresh = (ImageButton) findViewById(R.id.imageButton4);
+        this.statusToggle = (Switch) findViewById(R.id.switch2);
+        this.list = (ListView) findViewById(R.id.listView);
 
+        if (Math.random() > .5) {
+            myName = "John White";
+        }
+        else {
+            myName = "Ben Jones";
+        }
+
+        ((TextView)findViewById(R.id.textView8)).setText("Hello, " + myName);
+
+//        mAdapter = new ToDoItemAdapter(this, R.layout.row_list_to_do);
 
         buttonHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Help item = new Help();
-                item.Name = name.getText().toString();
+//                item.Name = name.getText().toString();
+                item.Name = myName;
                 item.Request = helpReason.getText().toString();
                 HelpRequestTable.insert(item);
                 createAndShowDialog(new Exception("   "), "Request Submitted");
@@ -92,7 +118,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (statusToggle.isChecked()) {
                     //add user to helpers table
                     User user = new User();
-                    user.Name = name.getText().toString();
+//                    user.Name = name.getText().toString();
+                    user.Name = myName;
                     user.Long = 1;
                     user.Lat = 2;
                     UserTable.insert(user);
@@ -121,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         String body = "";
                                         for (int i = 0; i < 5 && i < result.size(); i++) {
                                             Help help = result.get(i);
-                                            body += help.Name + ": " + help.Request + "\n";
+                                            body += "- " + help.Name + ": " + help.Request + "\n\n";
                                         }
                                         createAndShowDialog(new Exception(body), "Help Requests");
                                     }
@@ -150,6 +177,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             UserTable = mClient.getTable(User.class);
             HelpRequestTable = mClient.getTable(Help.class);
 
+            NotificationsManager.handleNotifications(this, SENDER_ID, MyHandler.class);
+
         } catch (MalformedURLException e) {
             createAndShowDialog(new Exception("There was an error creating the Mobile Service. Verify the URL"), "Error");
         } catch (Exception e) {
@@ -168,7 +197,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public String getName() {
-        return this.name != null ? name.getText().toString() : "John";
+//        return this.name != null ? name.getText().toString() : "John";
+        return myName;
     }
 
     public void getHelp(Help a){
