@@ -74,9 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.buttonRefresh = (Button) findViewById(R.id.button2);
         this.statusToggle = (Switch) findViewById(R.id.switch1);
 
-        UserTable = mClient.getTable(User.class);
-        HelpRequestTable = mClient.getTable(Help.class);
-
 
         buttonHelp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +145,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     "mjFiRdonjvSmmGdVUaEtMcLGoNCkrq37",
                     this
             );
+
+            UserTable = mClient.getTable(User.class);
+            HelpRequestTable = mClient.getTable(Help.class);
 
         } catch (MalformedURLException e) {
             createAndShowDialog(new Exception("There was an error creating the Mobile Service. Verify the URL"), "Error");
