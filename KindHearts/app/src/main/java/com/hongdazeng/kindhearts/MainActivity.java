@@ -13,6 +13,7 @@ import android.widget.Switch;
 import com.microsoft.windowsazure.mobileservices.*;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 //added and mostly extraneous
 
@@ -21,6 +22,7 @@ import android.os.AsyncTask;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
+import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button buttonRefresh;
     private Switch statusToggle;
     private MobileServiceClient mClient;
+    private MobileServiceTable<User> UserTable;
+    private MobileServiceTable<Help> HelpRequestTable;
 
     Help someHelp;
 
@@ -70,21 +74,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.buttonRefresh = (Button) findViewById(R.id.button2);
         this.statusToggle = (Switch) findViewById(R.id.switch1);
 
+        UserTable = mClient.getTable(User.class);
+        HelpRequestTable = mClient.getTable(Help.class);
+
+
         buttonHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Help item = new Help();
                 item.Name = name.getText().toString();
                 item.Request = helpReason.getText().toString();
-                mClient.getTable(Help.class).insert(item, new TableOperationCallback<Help>() {
-                    public void onCompleted(Help entity, Exception exception, ServiceFilterResponse response) {
-                        if (exception == null) {
-                            // Insert succeeded
-                        } else {
-                            // Insert failed
-                        }
-                    }
-                });
+                HelpRequestTable.insert(item);
             }
         });
 
@@ -97,15 +97,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     user.Name = name.getText().toString();
                     user.Long = 1;
                     user.Lat = 2;
-                    mClient.getTable(User.class).insert(user, new TableOperationCallback<User>() {
-                        public void onCompleted(User entity, Exception exception, ServiceFilterResponse response) {
-                            if (exception == null) {
-                                // Insert succeeded
-                            } else {
-                                // Insert failed
-                            }
-                        }
-                    });
+                    UserTable.insert(user);
+
+                    final ArrayList<Help> helpList = new ArrayList<Help>();
 
                     //dislpay users who need help
                     new AsyncTask<Void, Void, MobileServiceList<Help>>() {
@@ -121,18 +115,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                     @Override
                                     public void run() {
+                                        //add it to list readable from outside
+                                        for (Help h : result) {
+                                            helpList.add(h);
+                                        }
+                                        //show in dialogue
                                         String body = "";
                                         for (int i = 0; i < 5 && i < result.size(); i++) {
                                             Help help = result.get(i);
                                             body += help.Name + ": " + help.Request + "\n";
                                         }
                                         createAndShowDialog(new Exception(body), "Help Requests");
-
-//                                        getHelp(result.get(0));
-//                                        mAdapter.clear();
-//                                        for (ToDoItem item : result) {
-//                                            mAdapter.add(item);
-//                                        }
                                     }
                                 });
                             } catch (Exception exception) {
@@ -141,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             return result;
                         }
                     }.execute();
-
                 } else {
                     //not available
                 }
