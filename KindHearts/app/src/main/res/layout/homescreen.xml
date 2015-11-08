@@ -194,6 +194,16 @@
                 android:id="@+id/textView10" />
         </LinearLayout>
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textView12"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp" />
+
         <ListView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

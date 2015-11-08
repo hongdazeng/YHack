@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import com.microsoft.windowsazure.mobileservices.*;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Timer;
 
 //added and mostly extraneous
 
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static MobileServiceClient mClient;
     private MobileServiceTable<User> UserTable;
     private MobileServiceTable<Help> HelpRequestTable;
+    private TextView popul;
 //    private ToDoItemAdapter mAdapter;
 
     public static final String SENDER_ID = "1085437748397";
@@ -88,13 +91,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.buttonRefresh = (ImageButton) findViewById(R.id.imageButton4);
         this.statusToggle = (Switch) findViewById(R.id.switch2);
         this.list = (ListView) findViewById(R.id.listView);
+        this.popul = (TextView) findViewById(R.id.textView12);
 
-        if (Math.random() > .5) {
-            myName = "John White";
-        }
-        else {
-            myName = "Ben Jones";
-        }
+//        if (new Time(). % 2 == 0) {
+//            myName = "John White";
+//        }
+//        else {
+//            myName = "Ben Jones";
+//        }
+        myName = "John Smith";
 
         ((TextView)findViewById(R.id.textView8)).setText("Hello, " + myName);
 
@@ -150,7 +155,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                             Help help = result.get(i);
                                             body += "- " + help.Name + ": " + help.Request + "\n\n";
                                         }
-                                        createAndShowDialog(new Exception(body), "Help Requests");
+                                        popul.setText(body);
+//                                        createAndShowDialog(new Exception(body), "Help Requests");
                                     }
                                 });
                             } catch (Exception exception) {
